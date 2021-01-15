@@ -26,10 +26,34 @@ public class Proyecto extends Application {
     
     @Override
     public void start(Stage stage) {
-        
+        //FileChooser fc= new FileChooser();
+        //File file=fc.showOpenDialog(null);
+         //System.out.println(file.getAbsoluteFile());
+         HBox hb= new HBox();
+         hb.setStyle("-fx-background-color: #e67e22;");
+         Scene scene= new Scene(hb,400,400);
+         System.out.println("Heigth:"+hb.getHeight());
+         System.out.println("Width:"+hb.getWidth());
+         stage.setScene(scene);
+         stage.show();
          
     }
-
+    public Tree<File> crearArbol(String path){
+        File carpeta = new File("C:\\Users\\Tago\\Pictures");
+         System.out.println(carpeta.isDirectory());
+         Tree<File> archivos= new Tree(carpeta);
+         File lista[]= carpeta.listFiles();
+         System.out.println("Length:"+lista.length);
+         for(File file: lista){
+             System.out.println(file.getAbsoluteFile());
+             System.out.println(file.length()+"\n");
+             archivos.addFile(file);
+         }
+         
+         System.out.println("Impresion arbol*******");
+         archivos.ImprimirArbol();
+        return archivos;
+    }
 
     /**
      * @param args the command line arguments

@@ -25,6 +25,7 @@ public class Tree<E> {
         TreeNode<E> nodo= new TreeNode(content);
         arbol.setRaiz(nodo);
         this.raiz.getHijos().addLast(arbol);}
+    
     public void addFile(File file){
         Tree<E> arbol= new Tree();
         TreeNode<E> nodo= new TreeNode(file);
@@ -42,6 +43,7 @@ public class Tree<E> {
             }
         
     }
+    
     public void ImprimirArbol(){
         
        LinkedList<Tree<E>> hijos=this.raiz.getHijos();

@@ -30,10 +30,11 @@ public class Tree<E> {
         arbol.setRaiz(nodo);
         this.raiz.getHijos().addLast(arbol);
     }
-
+//este metodo considera como nodos carpetas y archivos de cualquier formato
     public void addFile(File file) {
         Tree<E> arbol = new Tree();
         TreeNode<E> nodo = new TreeNode(file);
+
         if (!file.isDirectory()) {
             nodo.setPeso(file.length());
         }
@@ -42,11 +43,12 @@ public class Tree<E> {
             this.raiz.getHijos().addLast(arbol);
             File[] lista = file.listFiles();
             //NUEVOOOOO CAMBIO CONFIRMAR ESTA VALIDACION
-            if(lista!=null){
-            for (File archivo : lista) {
-                
-                arbol.addFile(archivo);
-            }}
+            if (lista != null) {
+                for (File archivo : lista) {
+
+                    arbol.addFile(archivo);
+                }
+            }
             this.raiz.setPeso(this.raiz.getPeso() + arbol.raiz.getPeso());
         } else {
 
@@ -54,9 +56,36 @@ public class Tree<E> {
             this.raiz.setPeso(this.raiz.getPeso() + file.length());
         }
     }
+//Este metodo considera como unicos nodos las carpetas
+    public void addDirectory(File file) {
+        if (!file.isDirectory()) {
+            this.raiz.setPeso(this.raiz.getPeso() + file.length());
+        } else {
+            Tree<E> arbol = new Tree();
+            TreeNode<E> nodo = new TreeNode(file);
+            arbol.setRaiz(nodo);
+            this.raiz.getHijos().addLast(arbol);
+            File[] lista = file.listFiles();
+            for (File archivo : lista) {
 
-    
+                arbol.addDirectory(archivo);
 
+            }
+            this.raiz.setPeso(this.raiz.getPeso() + arbol.raiz.getPeso());
+        }
+
+    }
+//    public Tree Directorios(){
+//        Tree tree=this.clone();
+//        if(this.getRaiz().getContent().)
+//    }
+
+//    @Override
+//    public Tree<File> clone(){
+//        Tree<File> tree= new Tree();
+//        tree.setRaiz(raiz);
+//        return tree;
+//    }
     public void ImprimirArbol() {
 
         LinkedList<Tree<E>> hijos = this.raiz.getHijos();

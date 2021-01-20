@@ -11,13 +11,16 @@ import TDA.Tree;
 import java.io.File;
 import java.util.Iterator;
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.TilePane;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 
 /**
  *
@@ -37,8 +40,10 @@ public class Proyecto extends Application {
         //flow.setPadding(new Insets(400, 400, 400, 400));
         flow.setStyle("-fx-background-color: #f5f6fa" + ";"+"-fx-border-insets: 1 1 1 1;"+"-fx-border-color:#2f3640;");
         flow.setAlignment(Pos.CENTER);
-        Tree<File> file=crearArbol("asa");
-        file.getRaiz().setHeight(800);
+        
+        flow.setPrefSize(800, 100);
+        Tree<File> file=crearArbol("C:\\Users\\Tago\\Documents\\NetBeansProjects");
+        file.getRaiz().setHeight(600);
         file.getRaiz().setWidth(800);
         file.getRaiz().setPanel(flow);
         dispersarDimensiones(file);
@@ -59,11 +64,14 @@ public class Proyecto extends Application {
 //        flow.setManaged(true);
 //         flow.setVgap(100);
 //         flow.setHgap(100);
-        Scene scene = new Scene(flow, 800, 800);
+        ScrollPane scroll=new ScrollPane(flow);
+        
+        
+            Scene scene = new Scene(scroll, 800, 800);
         
         stage.setScene(scene);
         stage.show();
-        crearArbol("sa");
+        //crearArbol("sa");
 
     }
 
@@ -74,15 +82,15 @@ public class Proyecto extends Application {
     }
 
     public static Tree<File> crearArbol(String path) {
-        File carpeta = new File("C:\\Users\\Tago\\Documents");
-        System.out.println(carpeta.isDirectory());
+        File carpeta = new File(path);
+//        System.out.println(carpeta.isDirectory());
         Tree<File> archivos = new Tree(carpeta);
         File lista[] = carpeta.listFiles();
-        System.out.println("Length:" + lista.length);
+//        System.out.println("Length:" + lista.length);
         for (File file : lista) {
-            System.out.println(file.getAbsoluteFile());
-            System.out.println(file.length() + "\n");
-            archivos.addFile(file);
+//            System.out.println(file.getAbsoluteFile());
+//            System.out.println(file.length() + "\n");
+            archivos.addDirectory(file);
         }
 
         System.out.println("Impresion arbol*******");
@@ -99,13 +107,27 @@ public class Proyecto extends Application {
         while (iterator.hasNext()) {
 
             Tree<File> hijo = iterator.next();
-            if (hijo.getRaiz().getContent().isDirectory()) {
+            if (hijo.getRaiz().getContent().isDirectory()) { 
                 TilePane pane = new TilePane();
-                pane.setPadding(new Insets(alto / (3 * cantidad), ancho / (3 * cantidad), alto / (3 * cantidad), ancho / (3 * cantidad)));
-                int ind = (int) (Math.random() * (colores.length - 1));
-                pane.setStyle("-fx-background-color: " + colores[ind] + ";");
-                //pane.setStyle("-fx-background-color: #f5f6fa" + ";"+"-fx-border-insets: 1 1 1 1;"+"-fx-border-color:#2f3640;");
+                Label lb= new Label(hijo.getRaiz().getContent().getName()+" :"+hijo.getRaiz().getPeso()+" kb");
+                pane.getChildren().add(lb);
+//                Rectangle rect= new Rectangle(ancho/cantidad,alto/cantidad);
+//                pane.getChildren().add(rect);
+                //pane.setPadding(new Insets(alto / (3 * cantidad), ancho / (3 * cantidad), alto / (3 * cantidad), ancho / (3 * cantidad)));
+                pane.setPrefSize(ancho/(cantidad), alto/(cantidad));
                 
+                Tooltip tool = new Tooltip(hijo.getRaiz().getContent().getName());
+                
+                tool.setTextAlignment(TextAlignment.LEFT);
+                lb.setTooltip(tool);
+                System.out.println("Carpeta: "+hijo.getRaiz().getContent().getName()+"alto: "+alto/(cantidad)+"ancho: "+ancho/(cantidad));
+                //pane.maxWidth(ancho/cantidad);
+                //pane.maxHeight(alto/cantidad);
+                int ind = (int) (Math.random() * (colores.length - 1));
+                pane.setStyle("-fx-background-color: " + colores[ind] + ";"+"-fx-border-insets: 1 1 1 1;"+"-fx-border-color:#2f3640;");
+                //pane.setStyle("-fx-background-color: #f5f6fa" + ";"+"-fx-border-insets: 1 1 1 1;"+"-fx-border-color:#2f3640;");
+                pane.setVgap(10);
+                pane.setHgap(10);
                 hijo.getRaiz().setHeight(alto / cantidad);
                 hijo.getRaiz().setWidth(ancho / cantidad);
                 hijo.getRaiz().setPanel(pane);
@@ -113,6 +135,9 @@ public class Proyecto extends Application {
                 dispersarDimensiones(hijo);
             }
         }
+    }
+    public void deleteFile(File file){
+        
     }
 
     /**
@@ -123,5 +148,6 @@ public class Proyecto extends Application {
 
         // System.out.println(file.getAbsoluteFile());
     }
+
 
 }

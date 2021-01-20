@@ -5,6 +5,7 @@
  */
 package TDA;
 
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 
 /**
@@ -17,7 +18,7 @@ public class TreeNode<E> {
     private double peso;
     private double width;
     private double height;
-    private TilePane panel;
+    private Pane panel;
     
     public TreeNode(){
         content=null;
@@ -40,7 +41,7 @@ public class TreeNode<E> {
     public E getContent() {
         return content;
     }
-
+    
     public void setContent(E content) {
         this.content = content;
     }
@@ -69,11 +70,11 @@ public class TreeNode<E> {
         this.height = height;
     }
 
-    public TilePane getPanel() {
+    public Pane getPanel() {
         return panel;
     }
 
-    public void setPanel(TilePane panel) {
+    public void setPanel(Pane panel) {
         this.panel = panel;
     }
 

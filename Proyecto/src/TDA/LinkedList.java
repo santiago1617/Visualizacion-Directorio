@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package TDA;
+import java.io.Serializable;
 import java.util.Iterator;
 /**
  *
@@ -11,7 +12,7 @@ import java.util.Iterator;
  */
 
 
-public class LinkedList <E> implements List<E> {
+public class LinkedList <E> implements List<E>, Serializable {
     private Node<E> first, last;
     private int efectivo;
     

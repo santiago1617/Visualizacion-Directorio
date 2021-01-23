@@ -30,7 +30,11 @@ public class Tree<E> {
         arbol.setRaiz(nodo);
         this.raiz.getHijos().addLast(arbol);
     }
-//este metodo considera como nodos carpetas y archivos de cualquier formato
+
+    /**
+     * este metodo considera como nodos carpetas y archivos de cualquier formato
+     * @param file 
+     */
     public void addFile(File file) {
         Tree<E> arbol = new Tree();
         TreeNode<E> nodo = new TreeNode(file);
@@ -56,7 +60,10 @@ public class Tree<E> {
             this.raiz.setPeso(this.raiz.getPeso() + file.length());
         }
     }
-//Este metodo considera como unicos nodos las carpetas
+    /**
+     * Este metodo considera como unicos nodos las carpetas
+     * @param file 
+     */ 
     public void addDirectory(File file) {
         if (!file.isDirectory()) {
             this.raiz.setPeso(this.raiz.getPeso() + file.length());
@@ -66,26 +73,20 @@ public class Tree<E> {
             arbol.setRaiz(nodo);
             this.raiz.getHijos().addLast(arbol);
             File[] lista = file.listFiles();
+            if(lista!=null){
             for (File archivo : lista) {
 
                 arbol.addDirectory(archivo);
 
-            }
+            }}
             this.raiz.setPeso(this.raiz.getPeso() + arbol.raiz.getPeso());
         }
 
     }
-//    public Tree Directorios(){
-//        Tree tree=this.clone();
-//        if(this.getRaiz().getContent().)
-//    }
-
-//    @Override
-//    public Tree<File> clone(){
-//        Tree<File> tree= new Tree();
-//        tree.setRaiz(raiz);
-//        return tree;
-//    }
+    
+    /**
+     * Esto solo se encarga de imprimir los datos de cada uno de los nodos
+     */
     public void ImprimirArbol() {
 
         LinkedList<Tree<E>> hijos = this.raiz.getHijos();
